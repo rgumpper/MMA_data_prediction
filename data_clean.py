@@ -52,7 +52,51 @@ for i in cols1:
 df[cols1]=df[cols1].apply(pd.to_numeric, errors='coerce', axis=1)
 
 
+#DOB to a date-time still need to do
+df['Fighter DOB']=pd.to_datetime(df['Fighter DOB'])
 
-        
-    
+
+#for converting the record into a win, loss, tie, and nc columm
+df['Fighter Record']=df['Fighter Record'].str.split('-') 
+win=[]
+loss=[]
+tie=[]
+nc=[]
+for x, y, z in df['Fighter Record']:
+    win.append(x)
+    loss.append(y)
+    tie.append(z[0])
+df['wins']=win
+df['loss']=loss
+df['tie']=tie
+
+cols2=['wins', 'loss', 'tie']
+df[cols2]=df[cols2].apply(pd.to_numeric, errors='coerce', axis=1)
+
+df.to_csv('FightMetric_clean_recordintact.csv')
+
+df=df.drop('Fighter Record', axis=1)
+
+df.to_csv('FightMetric_clean.csv')
+
+df.plot(kind='hist', bins=100, subplots=True, layout=(4,4))
+plt.show()
+df.plot(kind='box', subplots=True, layout=(4,4))
+plt.show()
+
+
+plt.scatter(df['Fighter SLpM'], df['Fighter SApM'])
+plt.title('SApM vs SLpM')
+plt.xlabel('SLpM')
+plt.ylabel('SApM')
+plt.show()
+
+df['total']=df['wins']+df['loss']+df['tie']
+df['win percent']=df['wins']/df['total']
+       
+df['win percent'].plot(kind='hist', bins=100, alpha=0.5, color='red')
+plt.title('Histogram of Win Percentage')
+plt.xlabel('win percentage')
+plt.ylabel('frequency') 
+plt.show() 
 
