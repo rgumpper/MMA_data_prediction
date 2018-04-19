@@ -98,5 +98,19 @@ df['win percent'].plot(kind='hist', bins=100, alpha=0.5, color='red')
 plt.title('Histogram of Win Percentage')
 plt.xlabel('win percentage')
 plt.ylabel('frequency') 
-plt.show() 
+plt.show()
+
+orthodox=df[df['Fighter Stance']=='Orthodox'] 
+southpaw=df[df['Fighter Stance']=='Southpaw']
+switch=df[df['Fighter Stance']=='Switch']
+
+stance=[orthodox, southpaw, switch]
+orthodox['win percent'].plot(kind='hist', bins=50, alpha=0.5, color='blue')
+southpaw['win percent'].plot(kind='hist', bins=50, alpha=0.5, color='green')
+switch['win percent'].plot(kind='hist', bins=50, alpha=0.5, color='red')
+plt.legend(['Orthodox', 'Southpaw', 'Switch'])
+plt.title('Histogram of Win Percentage by Stance')
+plt.xlabel('win percentage')
+plt.ylabel('frequency')
+plt.show()
 
